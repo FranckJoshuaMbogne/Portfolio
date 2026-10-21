@@ -1,0 +1,313 @@
+@import "@fontsource-variable/plus-jakarta-sans/wght.css";
+@import "@fontsource-variable/playfair-display/wght-italic.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-ink antialiased;
+    font-feature-settings: "ss01", "kern";
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /*
+   * Type roles
+   *   font-sans / font-display  Plus Jakarta Sans — everything; headings bold
+   *   font-accent  Playfair Display  — italic accent words inside headings
+   */
+  .font-display {
+    font-weight: 700;
+  }
+  h1.font-display,
+  h2.font-display,
+  h1 .font-display,
+  h2 .font-display {
+    font-weight: 800;
+  }
+  .font-display em,
+  .font-display .italic,
+  .font-display.italic,
+  .font-accent {
+    font-family: "Playfair Display Variable", "Playfair Display", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: #123b2a;
+    color: #f1f3ea;
+  }
+
+  :focus-visible {
+    outline: 2px solid #b89b62;
+    outline-offset: 3px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: #d2bc8e;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-site {
+    @apply mx-auto w-full max-w-site px-gutter;
+  }
+
+  .eyebrow {
+    @apply font-sans text-eyebrow font-medium uppercase;
+  }
+
+  .hairline {
+    @apply border-ink/15;
+  }
+
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 250ms var(--ease-editorial);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  /* Long-form article typography */
+  .prose-editorial {
+    @apply text-[1.075rem] leading-[1.75] text-ink sm:text-[1.15rem];
+  }
+  .prose-editorial > * + * {
+    margin-top: 1.35em;
+  }
+  .prose-editorial h2 {
+    @apply font-display text-display-sm font-bold text-ink;
+    margin-top: 2.2em;
+  }
+  .prose-editorial h3 {
+    @apply font-sans text-xl font-semibold text-ink;
+    margin-top: 1.8em;
+  }
+  .prose-editorial a {
+    @apply text-forest-600 underline decoration-gold decoration-1 underline-offset-4 hover:text-forest;
+  }
+  .prose-editorial ul,
+  .prose-editorial ol {
+    padding-left: 1.25em;
+  }
+  .prose-editorial ul {
+    list-style: none;
+  }
+  .prose-editorial ul > li {
+    position: relative;
+  }
+  .prose-editorial ul > li::before {
+    content: "";
+    position: absolute;
+    left: -1.1em;
+    top: 0.78em;
+    width: 0.45em;
+    height: 1px;
+    background: #b89b62;
+  }
+  .prose-editorial ol {
+    list-style: decimal;
+  }
+  .prose-editorial ol > li::marker {
+    @apply font-medium text-ink-soft;
+  }
+  .prose-editorial li + li {
+    margin-top: 0.5em;
+  }
+  .prose-editorial blockquote {
+    @apply border-l-2 border-gold pl-6 font-accent text-display-sm italic text-forest;
+  }
+  .prose-editorial strong {
+    @apply font-semibold;
+  }
+  .prose-editorial code {
+    @apply rounded-sm bg-sage-100 px-1.5 py-0.5 text-[0.9em];
+  }
+  .prose-editorial hr {
+    @apply my-12 border-ink/15;
+  }
+}
+
+@layer utilities {
+  .py-section {
+    padding-top: theme("spacing.section");
+    padding-bottom: theme("spacing.section");
+  }
+  .py-section-sm {
+    padding-top: theme("spacing.section-sm");
+    padding-bottom: theme("spacing.section-sm");
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* ---------- Motion primitives (CSS so they run before hydration) ---------- */
+@keyframes mask-rise {
+  from {
+    transform: translate3d(0, 105%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes flow {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-1.5%, 1%, 0) rotate(-1.2deg);
+  }
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mask-line {
+  animation: mask-rise 1.1s var(--ease-editorial) both;
+}
+.anim-fade-up {
+  animation: fade-up 1s var(--ease-editorial) both;
+}
+.anim-fade-in {
+  animation: fade-in 1.6s ease-out both;
+}
+.anim-flow {
+  animation: flow 38s linear infinite;
+}
+.anim-drift {
+  animation: drift 22s ease-in-out infinite;
+  transform-origin: 60% 50%;
+}
+.anim-spin-slow {
+  animation: spin-slow 120s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(300%);
+  }
+}
+.anim-scroll-cue {
+  animation: scroll-cue 2.2s var(--ease-editorial) infinite;
+}
+
+/* ---------- Portfolio extras ---------- */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.anim-marquee {
+  animation: marquee 40s linear infinite;
+}
+.anim-marquee:hover {
+  animation-play-state: paused;
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+.anim-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.anim-pulse-ring {
+  animation: pulse-ring 2.4s var(--ease-editorial) infinite;
+}
+.text-gradient-gold {
+  background: linear-gradient(100deg, #d2bc8e 0%, #b89b62 45%, #f1f3ea 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+.border-soft {
+  border-color: color-mix(in srgb, currentColor 18%, transparent);
+}

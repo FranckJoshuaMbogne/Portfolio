@@ -1,0 +1,35 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Consultation requests from the website: anyone can create a valid one,
+    // nobody can read, change or delete them from the browser.
+    // Read them in the Firebase console → Firestore → consultations.
+    function str(v, max) { return v is string && v.size() <= max; }
+    function optStr(d, k, max) { return !(k in d) || str(d[k], max); }
+
+    function validConsultation(d) {
+      return d.keys().hasOnly(['name','email','phone','company','website','interests','engagement','adSpend','message','date','time','timezone','channel','lang','page','status','createdAt'])
+        && str(d.name, 100) && d.name.size() >= 2
+        && str(d.email, 160) && d.email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$')
+        && d.interests is list && d.interests.size() >= 1 && d.interests.size() <= 10
+        && str(d.message, 2000) && d.message.size() >= 10
+        && str(d.date, 20) && str(d.time, 40)
+        && d.lang in ['en', 'fr']
+        && d.status == 'new'
+        && d.createdAt == request.time
+        && optStr(d, 'phone', 30) && optStr(d, 'company', 120) && optStr(d, 'website', 200)
+        && optStr(d, 'engagement', 80) && optStr(d, 'adSpend', 60) && optStr(d, 'timezone', 60)
+        && optStr(d, 'channel', 40) && optStr(d, 'page', 200);
+    }
+
+    match /consultations/{id} {
+      allow create: if validConsultation(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
