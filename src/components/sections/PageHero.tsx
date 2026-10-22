@@ -7,7 +7,7 @@ export function PageHero({ eyebrow, lines, intro, children, crumbs }: { eyebrow:
   const { ui, lp } = useI18n();
   return (
     <section className="on-dark relative isolate overflow-hidden bg-deep pb-20 pt-36 text-ivory sm:pb-24 sm:pt-44">
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(44,106,79,0.55),transparent_60%)]" />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_80%_20%,rgba(30,82,58,0.32),transparent_60%)]" />
       <div aria-hidden="true" className="absolute -right-32 -top-32 -z-10 h-[520px] w-[520px] rounded-full border border-gold/20" />
       <div aria-hidden="true" className="anim-spin-slow absolute -right-10 -top-10 -z-10 h-[340px] w-[340px] rounded-full border border-dashed border-ivory/10" />
       <div className="container-site">

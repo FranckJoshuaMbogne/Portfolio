@@ -27,7 +27,7 @@ export default {
     },
     extend: {
       colors: {
-        deep: "#0A2118",
+        deep: "#050807", // near-black with a hint of green
         forest: {
           DEFAULT: "#123B2A",
           900: "#0A2118",

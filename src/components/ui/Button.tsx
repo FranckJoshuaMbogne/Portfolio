@@ -9,7 +9,7 @@ const base =
   "group/btn inline-flex min-h-[48px] items-center justify-center gap-3 rounded-full font-sans font-medium tracking-[0.01em] transition-[background-color,color,border-color] duration-200 ease-editorial disabled:cursor-not-allowed disabled:opacity-60";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-forest text-ivory hover:bg-deep",
+  primary: "bg-deep text-ivory hover:bg-forest hover:bg-none",
   light: "bg-ivory text-deep hover:bg-sage",
   outline: "border border-ink/25 text-ink hover:border-ink hover:bg-ink/[0.03]",
   "outline-light": "border border-ivory/30 text-ivory hover:border-ivory hover:bg-ivory/[0.06]",

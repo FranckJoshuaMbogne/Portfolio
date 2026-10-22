@@ -50,7 +50,7 @@ export default function About() {
           </div>
         </div>
       </section>
-      <section className="on-dark bg-forest py-section text-ivory">
+      <section className="on-dark bg-deep py-section text-ivory">
         <div className="container-site">
           <WordReveal text={t(profile.principle)} highlight={lang === "fr" ? ["systèmes"] : ["systems"]} className="max-w-5xl font-display text-display-lg font-extrabold leading-[1.1]" />
         </div>

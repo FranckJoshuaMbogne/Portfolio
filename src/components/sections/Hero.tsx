@@ -20,7 +20,7 @@ export function Hero() {
   // Cursor spotlight
   const sx = useMotionValue(70);
   const sy = useMotionValue(30);
-  const bg = useMotionTemplate`radial-gradient(600px circle at ${sx}% ${sy}%, rgba(44,106,79,0.55), transparent 60%)`;
+  const bg = useMotionTemplate`radial-gradient(600px circle at ${sx}% ${sy}%, rgba(30,82,58,0.32), transparent 60%)`;
 
   const lines = profile.heroLines[lang];
 

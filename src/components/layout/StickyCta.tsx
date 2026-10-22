@@ -28,7 +28,7 @@ export function StickyCta() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={ui.cta.whatsapp}
-        className="group fixed bottom-6 right-6 z-40 hidden h-14 items-center gap-3 rounded-full bg-forest pl-4 pr-4 text-ivory shadow-soft transition-all duration-300 hover:bg-deep hover:pr-6 md:flex"
+        className="group fixed bottom-6 right-6 z-40 hidden h-14 items-center gap-3 rounded-full border border-gold/40 bg-deep pl-4 pr-4 text-ivory shadow-soft transition-all duration-300 hover:border-gold hover:pr-6 md:flex"
       >
         <span className="relative flex h-6 w-6 items-center justify-center">
           <span className="anim-pulse-ring absolute inset-0 rounded-full bg-gold/60" />

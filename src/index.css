@@ -311,3 +311,8 @@
 .border-soft {
   border-color: color-mix(in srgb, currentColor 18%, transparent);
 }
+
+/* Main dark surface: deep black with a slight dark-green gradient */
+.bg-deep {
+  background-image: linear-gradient(165deg, #040605 0%, #060c09 45%, #0b1e15 100%);
+}

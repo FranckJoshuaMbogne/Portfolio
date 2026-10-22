@@ -8,7 +8,7 @@ import { useI18n } from "@/i18n";
 export function Statement() {
   const { t, lang } = useI18n();
   return (
-    <section aria-label={lang === "fr" ? "Ma conviction" : "What I believe"} className="on-dark relative overflow-hidden bg-forest py-section text-ivory">
+    <section aria-label={lang === "fr" ? "Ma conviction" : "What I believe"} className="on-dark relative overflow-hidden bg-deep py-section text-ivory">
       <div aria-hidden="true" className="absolute -right-40 top-10 h-[480px] w-[480px] rounded-full border border-gold/20" />
       <div aria-hidden="true" className="absolute -right-24 top-28 h-[320px] w-[320px] rounded-full border border-dashed border-ivory/10 anim-spin-slow" />
       <div className="container-site relative">

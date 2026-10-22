@@ -37,7 +37,7 @@ export default function Project() {
           ]),
         ]}
       />
-      <section className="on-dark relative isolate overflow-hidden pb-16 pt-36 text-ivory sm:pt-44" style={{ background: `linear-gradient(180deg, ${p.look.bg} 0%, #0A2118 100%)` }}>
+      <section className="on-dark relative isolate overflow-hidden pb-16 pt-36 text-ivory sm:pt-44" style={{ background: `linear-gradient(180deg, ${p.look.bg} 0%, #050807 100%)` }}>
         <div className="container-site">
           <nav aria-label="Breadcrumb" className="anim-fade-up text-sm text-ivory/60">
             <Link to={lp("/work")} className="group/btn inline-flex items-center gap-2 hover:text-ivory">

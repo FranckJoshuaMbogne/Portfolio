@@ -23,7 +23,7 @@ export default function Book() {
         path="/book"
       />
       <section className="on-dark relative overflow-hidden bg-deep pb-40 pt-36 text-ivory sm:pt-44">
-        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_30%,rgba(44,106,79,0.5),transparent_55%)]" />
+        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_30%,rgba(30,82,58,0.3),transparent_55%)]" />
         <div className="container-site relative grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-6">
             <p className="anim-fade-up eyebrow text-gold-light">{ui.form.free}</p>
@@ -46,7 +46,7 @@ export default function Book() {
             <ConsultationForm />
           </div>
           <aside className="min-w-0 space-y-3 lg:col-span-4 lg:pt-6">
-            <div className="rounded-[1.5rem] bg-forest p-6 text-ivory">
+            <div className="rounded-[1.5rem] bg-deep p-6 text-ivory">
               <p className="flex items-center gap-2 text-sm font-semibold"><Clock size={17} className="text-gold-light" aria-hidden="true" /> 30 min</p>
               <p className="mt-2 flex items-center gap-2 text-sm font-semibold"><Video size={17} className="text-gold-light" aria-hidden="true" /> Google Meet · WhatsApp · {lang === "fr" ? "Téléphone" : "Phone"}</p>
               <p className="mt-4 text-sm text-ivory/70">{lang === "fr" ? "Disponible en anglais et en français." : "Available in English and French."}</p>

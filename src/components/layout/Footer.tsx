@@ -11,7 +11,7 @@ export function Footer() {
   const year = 2026;
   return (
     <footer className="on-dark relative overflow-hidden bg-deep text-ivory">
-      <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgba(44,106,79,0.45),transparent_55%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_0%,rgba(30,82,58,0.28),transparent_55%)]" />
       <div className="container-site relative pb-28 pt-section-sm md:pb-12">
         <div className="grid gap-12 border-b border-ivory/10 pb-14 lg:grid-cols-12">
           <div className="lg:col-span-7">

@@ -23,7 +23,7 @@ export function Offers() {
               <div
                 className={cn(
                   "group relative flex h-full flex-col overflow-hidden rounded-[2rem] border p-8 transition-all duration-500 ease-editorial hover:-translate-y-2",
-                  i === 1 ? "on-dark border-transparent bg-forest text-ivory" : "border-ink/10 bg-ivory-50 hover:border-gold/50"
+                  i === 1 ? "on-dark border-gold/30 bg-deep text-ivory" : "border-ink/10 bg-ivory-50 hover:border-gold/50"
                 )}
               >
                 <span aria-hidden="true" className={cn("absolute -right-6 -top-10 font-display text-[9rem] font-extrabold leading-none", i === 1 ? "text-ivory/[0.06]" : "text-forest/[0.06]")}>{o.index}</span>

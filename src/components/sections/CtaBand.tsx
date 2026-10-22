@@ -9,7 +9,7 @@ export function CtaBand({ title }: { title?: React.ReactNode }) {
   return (
     <section aria-label={ui.cta.book} className="bg-ivory pb-section">
       <div className="container-site">
-        <Reveal className="on-dark relative overflow-hidden rounded-[2.5rem] bg-forest px-6 py-16 text-center text-ivory sm:px-12 sm:py-20">
+        <Reveal className="on-dark relative overflow-hidden rounded-[2.5rem] bg-deep px-6 py-16 text-center text-ivory sm:px-12 sm:py-20">
           <div aria-hidden="true" className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/20" />
           <div aria-hidden="true" className="anim-spin-slow absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-ivory/15" />
           <div className="relative">
