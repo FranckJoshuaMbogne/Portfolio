@@ -1,0 +1,109 @@
+mutation CreateUserMutation($displayName: String!, $email: String!, $username: String!, $bio: String, $profileImageUrl: String, $websiteUrl: String) @auth(level: USER) {
+  user_insert(data: {id_expr: "auth.uid", displayName: $displayName, email: $email, username: $username, bio: $bio, profileImageUrl: $profileImageUrl, websiteUrl: $websiteUrl})
+}
+
+mutation UpdateUserMutation($displayName: String, $bio: String, $profileImageUrl: String, $websiteUrl: String) @auth(level: USER) {
+  user_update(key: {id_expr: "auth.uid"}, data: {displayName: $displayName, bio: $bio, profileImageUrl: $profileImageUrl, websiteUrl: $websiteUrl})
+}
+
+mutation DeleteUserMutation @auth(level: USER) {
+  user_delete(key: {id_expr: "auth.uid"})
+}
+
+query GetUserQuery @auth(level: USER) {
+  user(key: {id_expr: "auth.uid"}) {
+    username email displayName bio profileImageUrl websiteUrl
+  }
+}
+
+query ListUsersQuery @auth(level: PUBLIC, insecureReason: "Publicly listing user profiles for networking purposes.") {
+  users {
+    username displayName
+  }
+}
+
+mutation CreateProjectMutation($title: String!, $description: String!, $projectUrl: String, $repoUrl: String, $imageUrl: String) @auth(level: USER) {
+  project_insert(data: {title: $title, description: $description, projectUrl: $projectUrl, repoUrl: $repoUrl, imageUrl: $imageUrl, userId_expr: "auth.uid"})
+}
+
+mutation UpdateProjectMutation($id: UUID!, $title: String, $description: String) @auth(level: USER) {
+  project_update(key: {id: $id}, data: {title: $title, description: $description})
+}
+
+mutation DeleteProjectMutation($id: UUID!) @auth(level: USER) {
+  project_delete(key: {id: $id})
+}
+
+query GetProjectQuery($id: UUID!) @auth(level: PUBLIC, insecureReason: "Projects are intended to be public portfolios.") {
+  project(id: $id) {
+    title description projectUrl repoUrl imageUrl user { username }
+  }
+}
+
+query ListProjectsQuery @auth(level: PUBLIC, insecureReason: "Projects are intended to be public portfolios.") {
+  projects {
+    title description
+  }
+}
+
+mutation CreateSkillMutation($name: String!, $category: String!, $proficiencyLevel: String) @auth(level: USER) {
+  skill_insert(data: {name: $name, category: $category, proficiencyLevel: $proficiencyLevel})
+}
+
+mutation UpdateSkillMutation($id: UUID!, $proficiencyLevel: String) @auth(level: USER) {
+  skill_update(key: {id: $id}, data: {proficiencyLevel: $proficiencyLevel})
+}
+
+mutation DeleteSkillMutation($id: UUID!) @auth(level: USER) {
+  skill_delete(key: {id: $id})
+}
+
+query GetSkillQuery($id: UUID!) @auth(level: PUBLIC, insecureReason: "Skills database is for public reference.") {
+  skill(id: $id) {
+    name category proficiencyLevel
+  }
+}
+
+query ListSkillsQuery @auth(level: PUBLIC, insecureReason: "Skills database is for public reference.") {
+  skills {
+    name category
+  }
+}
+
+mutation CreateUserSkillMutation($skillId: UUID!) @auth(level: USER) {
+  userSkill_insert(data: {userId_expr: "auth.uid", skillId: $skillId})
+}
+
+mutation DeleteUserSkillMutation($skillId: UUID!) @auth(level: USER) {
+  userSkill_delete(key: {userId_expr: "auth.uid", skillId: $skillId})
+}
+
+query ListMySkillsQuery @auth(level: USER) {
+  userSkills(where: {userId: {eq_expr: "auth.uid"}}) {
+    skill { name category }
+  }
+}
+
+mutation CreateExperienceMutation($companyName: String!, $role: String!, $startDate: Date, $endDate: Date, $description: String) @auth(level: USER) {
+  experience_insert(data: {companyName: $companyName, role: $role, startDate: $startDate, endDate: $endDate, description: $description, userId_expr: "auth.uid"})
+}
+
+mutation UpdateExperienceMutation($id: UUID!, $role: String, $endDate: Date) @auth(level: USER) {
+  experience_update(key: {id: $id}, data: {role: $role, endDate: $endDate})
+}
+
+mutation DeleteExperienceMutation($id: UUID!) @auth(level: USER) {
+  experience_delete(key: {id: $id})
+}
+
+query GetExperienceQuery($id: UUID!) @auth(level: PUBLIC, insecureReason: "Public professional experience profiles.") {
+  experience(id: $id) {
+    companyName role startDate endDate description
+  }
+}
+
+query ListExperiencesQuery @auth(level: PUBLIC, insecureReason: "Public professional experience profiles.") {
+  experiences {
+    companyName role
+  }
+}
