@@ -3,7 +3,8 @@
     "rules": "firestore.rules"
   },
   "hosting": {
-    "public": "dist",
+    "site": "franckpro",
+    "public": "public",
     "cleanUrls": true,
     "trailingSlash": false,
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
