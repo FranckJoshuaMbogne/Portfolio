@@ -4,7 +4,7 @@
   },
   "hosting": {
     "site": "portfolio-8e06d",
-    "public": "public",
+    "public": "dist",
     "cleanUrls": true,
     "trailingSlash": false,
     "ignore": [
