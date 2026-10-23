@@ -40,6 +40,15 @@
         ]
       },
       {
+        "source": "/media/**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, max-age=3600"
+          }
+        ]
+      },
+      {
         "source": "**/*.html",
         "headers": [
           {
@@ -64,6 +73,32 @@
             "value": "SAMEORIGIN"
           }
         ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/admin",
+        "destination": "/app.html"
+      },
+      {
+        "source": "/admin/**",
+        "destination": "/app.html"
+      },
+      {
+        "source": "/work/**",
+        "destination": "/app.html"
+      },
+      {
+        "source": "/fr/work/**",
+        "destination": "/app.html"
+      },
+      {
+        "source": "/services/**",
+        "destination": "/app.html"
+      },
+      {
+        "source": "/fr/services/**",
+        "destination": "/app.html"
       }
     ]
   }

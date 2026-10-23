@@ -1,32 +1,10 @@
-import type { L } from "@/i18n";
+import type { Organisation, Education, Certification } from "@/content/types";
+export type { Organisation };
 
 /**
  * EXPERIENCE — taken from your LinkedIn profile (Oct 2026).
  * Add a role: copy one object, change the fields. Dates are "YYYY-MM"; end: null = current.
  */
-export interface Role {
-  title: L;
-  start: string;
-  end: string | null;
-  type: L;
-  location: L;
-  summary: L;
-  highlights: L[];
-  skills: string[];
-}
-
-export interface Organisation {
-  id: string;
-  name: string;
-  /** Short description of the organisation. */
-  about: L;
-  country: "India" | "USA" | "Cameroon";
-  url?: string;
-  roles: Role[];
-  /** Service domains this experience proves (see services.ts). */
-  domains: string[];
-}
-
 export const experience: Organisation[] = [
   {
     id: "my-perfect-fit",
@@ -218,7 +196,7 @@ export const experience: Organisation[] = [
   },
 ];
 
-export const education = [
+export const education: Education[] = [
   {
     school: "ESSEC Business School",
     degree: {
@@ -239,7 +217,7 @@ export const education = [
   },
 ];
 
-export const certifications = [
+export const certifications: Certification[] = [
   { name: "Business Analysis Fundamentals", issuer: "Project Management Institute", date: "2025-07" },
   { name: "Career Essentials in Data Analysis", issuer: "Microsoft & LinkedIn", date: "2025-06" },
   { name: "Data Analysis Career Track", issuer: "Microsoft", date: "2025-06" },

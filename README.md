@@ -66,3 +66,28 @@ Every text has an `en` and an `fr` version — edit both.
 ## Pages
 
 `/` · `/work` · `/work/:project` · `/services` · `/services/:area` · `/experience` · `/about` · `/book` · `/thank-you` — and the same under `/fr/…`.
+
+
+## Admin (update the portfolio every week)
+
+Open **/admin** on the live site (https://franckpros.web.app/admin) and sign in with Google.
+
+| Section | What you edit |
+|---|---|
+| Requests | Strategy-call / consultation requests from the booking form — status, notes, WhatsApp/email/call, CSV export |
+| Photo, contact & links | Home portrait, About photo, main button text + link, phone/WhatsApp, email, LinkedIn & other links, showreel video |
+| Home & About text | Hero headline, statement, numbers, problems/solutions, offers, About story |
+| Work / projects | Create, edit, delete, reorder, publish/unpublish projects (use cases): images, gallery, video, links, description |
+| Experience | Companies, logos, roles, dates, highlights, skills (timeline) |
+| Services / Industries | Service areas and industries, with images and links to projects |
+| Education & certifications, FAQ | As named |
+
+Saved changes are live immediately. The site is also rebuilt every night (GitHub Actions) so Google sees the latest version.
+
+**One-time setup in the Firebase console (project franckjoshua):**
+1. Authentication → Sign-in method → enable **Google**.
+2. Authentication → Settings → Authorized domains → add **franckpros.web.app**.
+3. Deploy the rules: `firebase deploy --only firestore:rules`.
+
+Admins are the emails listed in `firestore.rules` → `isAdmin()`.
+Images uploaded in the admin are compressed (WebP) and stored in Firestore — no paid Storage plan needed. Videos are added as links (YouTube, Vimeo, Google Drive or .mp4).

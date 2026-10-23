@@ -1,26 +1,10 @@
-import type { L } from "@/i18n";
+import type { Domain, ServiceItem } from "@/content/types";
+export type { Domain };
 
 /**
  * SERVICES — five domains. Each one lists the services and links to the
  * companies (experience.ts ids) and projects (projects.ts slugs) that prove it.
  */
-export interface ServiceItem {
-  name: L;
-  desc: L;
-}
-
-export interface Domain {
-  slug: string;
-  index: string;
-  name: L;
-  tagline: L;
-  description: L;
-  services: ServiceItem[];
-  tools: string[];
-  orgs: string[];
-  projects: string[];
-}
-
 const s = (en: string, fr: string, den: string, dfr: string): ServiceItem => ({ name: { en, fr }, desc: { en: den, fr: dfr } });
 
 export const domains: Domain[] = [
@@ -129,6 +113,3 @@ export const domains: Domain[] = [
   },
 ];
 
-export function getDomain(slug: string) {
-  return domains.find((d) => d.slug === slug);
-}

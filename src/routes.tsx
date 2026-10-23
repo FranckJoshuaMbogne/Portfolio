@@ -12,6 +12,7 @@ const About = lazy(() => import("@/pages/About"));
 const Book = lazy(() => import("@/pages/Book"));
 const ThankYou = lazy(() => import("@/pages/ThankYou"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
+const Admin = lazy(() => import("@/admin/Admin"));
 
 function S({ children }: { children: ReactNode }) {
   return <Suspense fallback={<div className="min-h-screen bg-deep" aria-busy="true" />}>{children}</Suspense>;
@@ -40,6 +41,7 @@ export function AppRoutes() {
         {pages("/fr")}
         <Route path="*" element={<S><NotFound /></S>} />
       </Route>
+      <Route path="/admin/*" element={<S><Admin /></S>} />
     </Routes>
   );
 }

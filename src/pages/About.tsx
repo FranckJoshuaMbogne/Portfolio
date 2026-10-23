@@ -1,7 +1,6 @@
 import { Seo, personLd } from "@/lib/seo";
 import { useI18n } from "@/i18n";
-import { profile } from "@/data/profile";
-import { site } from "@/config/site";
+import { useContact, useContent, useMedia } from "@/content/ContentProvider";
 import { PageHero } from "@/components/sections/PageHero";
 import { Reveal } from "@/components/animations/Reveal";
 import { WordReveal } from "@/components/animations/WordReveal";
@@ -11,13 +10,17 @@ import { CtaBand } from "@/components/sections/CtaBand";
 
 export default function About() {
   const { lang, t, lp, ui } = useI18n();
+  const { profile, settings } = useContent();
+  const contact = useContact();
+  const portrait = useMedia(settings.portrait);
+  const aboutImage = useMedia(settings.aboutImage);
   const description =
     lang === "fr"
       ? "Ingénieur en systèmes informatiques, spécialiste du marketing de performance et de la stratégie de revenus. Cameroun, Inde, États-Unis."
       : "Computer systems engineer, performance marketer and revenue strategist. Cameroon, India, USA.";
   return (
     <>
-      <Seo title={lang === "fr" ? "À propos" : "About"} description={description} path="/about" jsonLd={[personLd(description)]} />
+      <Seo title={lang === "fr" ? "À propos" : "About"} description={description} path="/about" jsonLd={[personLd(description, settings, portrait)]} />
       <PageHero
         eyebrow={ui.nav.about}
         lines={lang === "fr" ? ["Ingénieur, marketeur,", <em key="e">bâtisseur de systèmes.</em>] : ["Engineer, marketer,", <em key="e">system builder.</em>]}
@@ -27,7 +30,7 @@ export default function About() {
       <section className="bg-ivory py-section-sm">
         <div className="container-site grid gap-16 lg:grid-cols-12">
           <div className="on-dark rounded-[2rem] bg-deep p-8 pb-14 lg:col-span-5 lg:self-start lg:sticky lg:top-28">
-            <Portrait />
+            {aboutImage ? <img src={aboutImage} alt="" className="aspect-[4/5] w-full rounded-[1.5rem] object-cover" loading="lazy" /> : <Portrait />}
           </div>
           <div className="space-y-6 text-lg leading-relaxed text-ink-muted lg:col-span-7">
             {profile.story.map((p, i) => (
@@ -44,15 +47,15 @@ export default function About() {
               ))}
             </div>
             <p className="pt-4 text-base">
-              {lang === "fr" ? "Langues : français, anglais." : "Languages: English, French."}{" "}
-              <a href={site.social[0].href} target="_blank" rel="noopener noreferrer" className="font-semibold text-forest underline decoration-gold underline-offset-4">LinkedIn ↗</a>
+              {t(profile.languages)}{" "}
+              <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="font-semibold text-forest underline decoration-gold underline-offset-4">LinkedIn ↗</a>
             </p>
           </div>
         </div>
       </section>
       <section className="on-dark bg-deep py-section text-ivory">
         <div className="container-site">
-          <WordReveal text={t(profile.principle)} highlight={lang === "fr" ? ["systèmes"] : ["systems"]} className="max-w-5xl font-display text-display-lg font-extrabold leading-[1.1]" />
+          <WordReveal text={t(profile.principle)} className="max-w-5xl font-display text-display-lg font-extrabold leading-[1.1]" />
         </div>
       </section>
       <ProblemFix />

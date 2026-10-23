@@ -1,11 +1,12 @@
 import { Mail, MessageCircle, Phone } from "lucide-react";
-import { MagneticButton } from "@/components/animations/Magnetic";
+import { PrimaryCta } from "@/components/animations/Magnetic";
 import { Reveal } from "@/components/animations/Reveal";
-import { site } from "@/config/site";
+import { useContact } from "@/content/ContentProvider";
 import { useI18n } from "@/i18n";
 
 export function CtaBand({ title }: { title?: React.ReactNode }) {
-  const { lang, lp, ui } = useI18n();
+  const { lang, ui } = useI18n();
+  const contact = useContact();
   return (
     <section aria-label={ui.cta.book} className="bg-ivory pb-section">
       <div className="container-site">
@@ -23,12 +24,12 @@ export function CtaBand({ title }: { title?: React.ReactNode }) {
                 : "You'll leave with 2–3 concrete priorities for your ads, website and data — whether or not we work together."}
             </p>
             <div className="mt-10 flex justify-center">
-              <MagneticButton to={lp("/book")}>{ui.cta.book}</MagneticButton>
+              <PrimaryCta />
             </div>
             <div className="mt-8 flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm font-medium text-ivory/80">
-              <a href={site.contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-ivory"><MessageCircle size={17} aria-hidden="true" className="text-gold-light" /> WhatsApp</a>
-              <a href={site.contact.phoneHref} className="flex items-center gap-2 hover:text-ivory"><Phone size={17} aria-hidden="true" className="text-gold-light" /> {site.contact.phoneDisplay}</a>
-              <a href={`mailto:${site.contact.email}`} className="flex items-center gap-2 hover:text-ivory"><Mail size={17} aria-hidden="true" className="text-gold-light" /> {ui.cta.email}</a>
+              <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-ivory"><MessageCircle size={17} aria-hidden="true" className="text-gold-light" /> WhatsApp</a>
+              <a href={contact.phoneHref} className="flex items-center gap-2 hover:text-ivory"><Phone size={17} aria-hidden="true" className="text-gold-light" /> {contact.phoneDisplay}</a>
+              <a href={`mailto:${contact.email}`} className="flex items-center gap-2 hover:text-ivory"><Mail size={17} aria-hidden="true" className="text-gold-light" /> {ui.cta.email}</a>
             </div>
           </div>
         </Reveal>

@@ -2,12 +2,24 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Consultation requests from the website: anyone can create a valid one,
-    // nobody can read, change or delete them from the browser.
-    // Read them in the Firebase console → Firestore → consultations.
+    // ---- Who is an admin -------------------------------------------------
+    // Signed in with one of these verified Google/email accounts, OR has a
+    // document admins/{uid} (create it in the Firebase console to add people).
+    function isAdmin() {
+      return request.auth != null && (
+        (request.auth.token.email_verified == true && request.auth.token.email in [
+          'franckjoshuambogne@gmail.com',
+          'fngoueyoumbongne@gmail.com',
+          'theblutailor@gmail.com'
+        ])
+        || exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
     function str(v, max) { return v is string && v.size() <= max; }
     function optStr(d, k, max) { return !(k in d) || str(d[k], max); }
 
+    // ---- Consultation requests (public form) ------------------------------
     function validConsultation(d) {
       return d.keys().hasOnly(['name','email','phone','company','website','interests','engagement','adSpend','message','date','time','timezone','channel','lang','page','status','createdAt'])
         && str(d.name, 100) && d.name.size() >= 2
@@ -25,7 +37,30 @@ service cloud.firestore {
 
     match /consultations/{id} {
       allow create: if validConsultation(request.resource.data);
-      allow read, update, delete: if false;
+      allow read, delete: if isAdmin();
+      // Admin can only change the follow-up fields.
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'notes', 'updatedAt'])
+        && request.resource.data.status in ['new', 'contacted', 'booked', 'done', 'spam'];
+    }
+
+    // ---- Portfolio content (edited in /admin, read by the website) --------
+    match /content/{section} {
+      allow read: if true;
+      allow write: if isAdmin()
+        && section in ['settings', 'profile', 'faqs', 'projects', 'experience', 'services', 'industries', 'credentials'];
+    }
+
+    // Uploaded images (stored as compressed data URLs).
+    match /media/{id} {
+      allow read: if true;
+      allow create, update: if isAdmin() && request.resource.data.data is string && request.resource.data.data.size() < 1000000;
+      allow delete: if isAdmin();
+    }
+
+    match /admins/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
     }
 
     match /{document=**} {

@@ -12,19 +12,23 @@ function Word({ word, progress, range }: { word: string; progress: MotionValue<n
   );
 }
 
-/** Each word lights up as the paragraph scrolls through the viewport. */
-export function WordReveal({ text, className, highlight = [] }: { text: string; className?: string; highlight?: string[] }) {
+/**
+ * Each word lights up as the paragraph scrolls through the viewport.
+ * Words wrapped in *asterisks* are highlighted in gold italics.
+ */
+export function WordReveal({ text, className }: { text: string; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.85", "end 0.45"] });
-  const words = text.split(" ");
+  const words = text.split(/\s+/).filter(Boolean);
+  const plain = text.replace(/\*/g, "");
   return (
-    <p ref={ref} className={cn("flex flex-wrap", className)} aria-label={text}>
+    <p ref={ref} className={cn("flex flex-wrap", className)} aria-label={plain}>
       {words.map((w, i) => {
         const start = i / words.length;
-        const isHi = highlight.some((h) => w.toLowerCase().includes(h.toLowerCase()));
+        const isHi = /\*/.test(w);
         return (
           <span key={i} aria-hidden="true" className={cn(isHi && "font-accent italic text-gold-light")}>
-            <Word word={w} progress={scrollYProgress} range={[start, Math.min(1, start + 1.5 / words.length)]} />
+            <Word word={w.replace(/\*/g, "")} progress={scrollYProgress} range={[start, Math.min(1, start + 1.5 / words.length)]} />
           </span>
         );
       })}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { site } from "@/config/site";
+import { useContact } from "@/content/ContentProvider";
 import { useI18n } from "@/i18n";
 import { cn } from "@/lib/utils";
 import { Logo } from "./Logo";
@@ -10,6 +11,7 @@ import { ButtonLink } from "@/components/ui/Button";
 
 export function Navbar() {
   const { ui, lp } = useI18n();
+  const contact = useContact();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -151,9 +153,9 @@ export function Navbar() {
                 {ui.cta.book}
               </ButtonLink>
               <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ivory/75">
-                <a href={site.contact.phoneHref} className="py-1">{site.contact.phoneDisplay}</a>
-                <a href={site.contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="py-1">WhatsApp</a>
-                <a href={`mailto:${site.contact.email}`} className="py-1">{site.contact.email}</a>
+                <a href={contact.phoneHref} className="py-1">{contact.phoneDisplay}</a>
+                <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="py-1">WhatsApp</a>
+                <a href={`mailto:${contact.email}`} className="py-1">{contact.email}</a>
               </div>
             </div>
           </motion.div>

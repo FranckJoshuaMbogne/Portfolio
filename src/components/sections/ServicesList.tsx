@@ -2,19 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import { domains } from "@/data/services";
-import { experience } from "@/data/experience";
+import { useContent } from "@/content/ContentProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ButtonLink, Arrow } from "@/components/ui/Button";
 import { useI18n } from "@/i18n";
 import { cn } from "@/lib/utils";
 
-const orgName = (id: string) => experience.find((o) => o.id === id)?.name.split(" · ")[0] ?? id;
 
 /** Interactive list of the five domains; opening one reveals services and proof. */
 export function ServicesList({ light = false }: { light?: boolean }) {
   const { t, lp, lang, ui } = useI18n();
   const [open, setOpen] = useState(0);
+  const { services: domains, experience } = useContent();
+  const orgName = (id: string) => experience.find((o) => o.id === id)?.name.split(" · ")[0] ?? id;
   return (
     <section aria-labelledby="services-title" className={cn("py-section", light ? "bg-ivory" : "on-dark bg-deep text-ivory")}>
       <div className="container-site">

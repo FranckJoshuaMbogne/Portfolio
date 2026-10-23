@@ -4,10 +4,11 @@ import { PageHero } from "@/components/sections/PageHero";
 import { Timeline } from "@/components/sections/Timeline";
 import { Credentials } from "@/components/sections/Credentials";
 import { CtaBand } from "@/components/sections/CtaBand";
-import { site } from "@/config/site";
+import { useContact } from "@/content/ContentProvider";
 
 export default function Experience() {
   const { lang, lp, ui } = useI18n();
+  const contact = useContact();
   return (
     <>
       <Seo
@@ -26,7 +27,7 @@ export default function Experience() {
         intro={lang === "fr" ? "Chaque entreprise, chaque rôle, et ce que j'y ai concrètement réalisé." : "Every company, every role, and what I actually delivered there."}
         crumbs={[{ label: ui.nav.experience, to: lp("/experience") }]}
       >
-        <a href={site.social[0].href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[52px] items-center rounded-full border border-ivory/30 px-7 font-semibold hover:border-ivory">
+        <a href={contact.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[52px] items-center rounded-full border border-ivory/30 px-7 font-semibold hover:border-ivory">
           LinkedIn ↗
         </a>
       </PageHero>

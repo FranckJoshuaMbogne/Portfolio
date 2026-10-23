@@ -2,11 +2,12 @@ import { WordReveal } from "@/components/animations/WordReveal";
 import { Counter } from "@/components/animations/Counter";
 import { Reveal } from "@/components/animations/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeader";
-import { profile } from "@/data/profile";
+import { useContent } from "@/content/ContentProvider";
 import { useI18n } from "@/i18n";
 
 export function Statement() {
   const { t, lang } = useI18n();
+  const { profile } = useContent();
   return (
     <section aria-label={lang === "fr" ? "Ma conviction" : "What I believe"} className="on-dark relative overflow-hidden bg-deep py-section text-ivory">
       <div aria-hidden="true" className="absolute -right-40 top-10 h-[480px] w-[480px] rounded-full border border-gold/20" />
@@ -15,7 +16,6 @@ export function Statement() {
         <Eyebrow light>{lang === "fr" ? "Ma conviction" : "What I believe"}</Eyebrow>
         <WordReveal
           text={t(profile.statement)}
-          highlight={lang === "fr" ? ["système", "réparant"] : ["system", "fixing"]}
           className="mt-8 max-w-5xl font-display text-display-lg font-extrabold leading-[1.08]"
         />
         <dl className="mt-20 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-ivory/15 pt-10 lg:grid-cols-4">

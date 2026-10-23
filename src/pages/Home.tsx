@@ -1,6 +1,7 @@
 import { Seo, personLd, websiteLd, faqLd } from "@/lib/seo";
 import { useI18n } from "@/i18n";
-import { faqs } from "@/data/profile";
+import { useContent, useMedia } from "@/content/ContentProvider";
+import { Industries } from "@/components/sections/Industries";
 import { Hero } from "@/components/sections/Hero";
 import { OrgMarquee } from "@/components/sections/OrgMarquee";
 import { Statement } from "@/components/sections/Statement";
@@ -18,6 +19,8 @@ import { ButtonLink } from "@/components/ui/Button";
 
 export default function Home() {
   const { lang, t, lp, ui } = useI18n();
+  const { faqs, settings } = useContent();
+  const portrait = useMedia(settings.portrait);
   const description =
     lang === "fr"
       ? "Franck Joshua Mbogne — ingénieur en systèmes de revenus. Marketing de performance (Google & Meta Ads), sites web et Shopify, SEO, data et IA pour une croissance prévisible et rentable."
@@ -28,13 +31,14 @@ export default function Home() {
         title={lang === "fr" ? "Franck Joshua Mbogne — Ingénieur en systèmes de revenus" : "Franck Joshua Mbogne — Revenue Systems Engineer"}
         description={description}
         path="/"
-        jsonLd={[personLd(description), websiteLd(), faqLd(faqs.map((f) => ({ question: t(f.q), answer: t(f.a) })))]}
+        jsonLd={[personLd(description, settings, portrait), websiteLd(), faqLd(faqs.map((f) => ({ question: t(f.q), answer: t(f.a) })))]}
       />
       <Hero />
       <OrgMarquee />
       <Statement />
       <FeaturedWork />
       <ServicesList />
+      <Industries />
       <ProblemFix />
       <section aria-labelledby="xp-title" className="bg-ivory py-section">
         <div className="container-site">

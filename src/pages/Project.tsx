@@ -2,9 +2,11 @@ import { Link, useParams } from "react-router-dom";
 import { ArrowUpRight, Check } from "lucide-react";
 import { Seo, breadcrumbLd } from "@/lib/seo";
 import { useI18n } from "@/i18n";
-import { getProject, kindLabel, projects } from "@/data/projects";
-import { domains } from "@/data/services";
-import { experience } from "@/data/experience";
+import { kindLabel } from "@/data/projects";
+import { useContent, useContentState, useMedia } from "@/content/ContentProvider";
+import { MediaImage } from "@/components/ui/MediaImage";
+import { VideoEmbed, embedUrl } from "@/components/ui/VideoEmbed";
+import { PageLoading } from "@/components/ui/PageLoading";
 import { ProjectPreview } from "@/components/art/ProjectPreview";
 import { Reveal } from "@/components/animations/Reveal";
 import { MaskText } from "@/components/animations/MaskText";
@@ -15,8 +17,12 @@ import NotFound from "./NotFound";
 export default function Project() {
   const { slug = "" } = useParams();
   const { t, lp, ui, lang } = useI18n();
-  const p = getProject(slug);
-  if (!p) return <NotFound />;
+  const { projects: all, experience, services: domains } = useContent();
+  const { ready } = useContentState();
+  const projects = all.filter((x) => x.published !== false);
+  const p = projects.find((x) => x.slug === slug);
+  const ogImage = useMedia(p?.image);
+  if (!p) return ready ? <NotFound /> : <PageLoading />;
   const idx = projects.findIndex((x) => x.slug === p.slug);
   const next = projects[(idx + 1) % projects.length];
   const org = experience.find((o) => o.id === p.org);
@@ -28,7 +34,7 @@ export default function Project() {
         title={`${p.name} — ${t(kindLabel[p.kind])}`}
         description={t(p.summary)}
         path={`/work/${p.slug}`}
-        image={p.image}
+        image={ogImage && !ogImage.startsWith("data:") ? ogImage : undefined}
         jsonLd={[
           breadcrumbLd([
             { name: ui.nav.home, path: lp("/") },
@@ -65,7 +71,7 @@ export default function Project() {
           <Reveal>
             <ProjectPreview project={p} priority />
           </Reveal>
-          {!p.image && !p.video && <p className="mt-3 text-center text-xs text-ink-soft">{ui.illustrativePreview}</p>}
+          {!p.image && !(p.video && !embedUrl(p.video)) && <p className="mt-3 text-center text-xs text-ink-soft">{ui.illustrativePreview}</p>}
         </div>
       </section>
 
@@ -113,6 +119,18 @@ export default function Project() {
                 ))}
               </ul>
             </Reveal>
+            {p.video && embedUrl(p.video) && (
+              <Reveal className="mt-12 overflow-hidden rounded-[1.5rem] border border-ink/10">
+                <VideoEmbed src={p.video} title={p.name} />
+              </Reveal>
+            )}
+            {p.gallery && p.gallery.length > 0 && (
+              <Reveal className="mt-12 grid gap-4 sm:grid-cols-2">
+                {p.gallery.map((g, i) => (
+                  <MediaImage key={i} src={g} alt={`${p.name} — ${i + 1}`} className={i === 0 && p.gallery!.length % 2 === 1 ? "w-full rounded-2xl border border-ink/10 object-cover sm:col-span-2" : "aspect-[4/3] w-full rounded-2xl border border-ink/10 object-cover"} />
+                ))}
+              </Reveal>
+            )}
             <Reveal className="on-dark mt-12 rounded-[1.5rem] bg-deep p-8 text-ivory">
               <h2 className="eyebrow text-gold-light">{ui.outcome}</h2>
               <p className="mt-4 font-accent text-[clamp(1.3rem,2.4vw,1.8rem)] italic leading-snug">{t(p.outcome)}</p>

@@ -1,12 +1,13 @@
 import { Clock, Mail, MessageCircle, Phone, Video } from "lucide-react";
 import { Seo } from "@/lib/seo";
 import { useI18n } from "@/i18n";
-import { site } from "@/config/site";
+import { useContact } from "@/content/ContentProvider";
 import { ConsultationForm } from "@/components/forms/ConsultationForm";
 import { MaskText } from "@/components/animations/MaskText";
 
 export default function Book() {
   const { ui, lang } = useI18n();
+  const contact = useContact();
   const expect =
     lang === "fr"
       ? ["Vos objectifs et votre situation actuelle", "Une revue rapide de votre pub, site et données", "2 ou 3 priorités concrètes à appliquer", "Une proposition claire, seulement si c'est pertinent"]
@@ -51,17 +52,17 @@ export default function Book() {
               <p className="mt-2 flex items-center gap-2 text-sm font-semibold"><Video size={17} className="text-gold-light" aria-hidden="true" /> Google Meet · WhatsApp · {lang === "fr" ? "Téléphone" : "Phone"}</p>
               <p className="mt-4 text-sm text-ivory/70">{lang === "fr" ? "Disponible en anglais et en français." : "Available in English and French."}</p>
             </div>
-            <a href={site.contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-[1.5rem] border border-ink/10 bg-ivory-50 p-5 transition-colors hover:border-gold">
+            <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 rounded-[1.5rem] border border-ink/10 bg-ivory-50 p-5 transition-colors hover:border-gold">
               <MessageCircle className="text-forest" aria-hidden="true" />
-              <span><span className="block font-semibold text-ink">{ui.cta.whatsapp}</span><span className="text-sm text-ink-soft">{site.contact.phoneDisplay}</span></span>
+              <span><span className="block font-semibold text-ink">{ui.cta.whatsapp}</span><span className="text-sm text-ink-soft">{contact.phoneDisplay}</span></span>
             </a>
-            <a href={site.contact.phoneHref} className="flex items-center gap-4 rounded-[1.5rem] border border-ink/10 bg-ivory-50 p-5 transition-colors hover:border-gold">
+            <a href={contact.phoneHref} className="flex items-center gap-4 rounded-[1.5rem] border border-ink/10 bg-ivory-50 p-5 transition-colors hover:border-gold">
               <Phone className="text-forest" aria-hidden="true" />
               <span className="font-semibold text-ink">{ui.cta.call}</span>
             </a>
-            <a href={`mailto:${site.contact.email}`} className="flex items-center gap-4 rounded-[1.5rem] border border-ink/10 bg-ivory-50 p-5 transition-colors hover:border-gold">
+            <a href={`mailto:${contact.email}`} className="flex items-center gap-4 rounded-[1.5rem] border border-ink/10 bg-ivory-50 p-5 transition-colors hover:border-gold">
               <Mail className="text-forest" aria-hidden="true" />
-              <span className="min-w-0"><span className="block font-semibold text-ink">{ui.cta.email}</span><span className="block truncate text-sm text-ink-soft">{site.contact.email}</span></span>
+              <span className="min-w-0"><span className="block font-semibold text-ink">{ui.cta.email}</span><span className="block truncate text-sm text-ink-soft">{contact.email}</span></span>
             </a>
           </aside>
         </div>

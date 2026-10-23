@@ -1,16 +1,17 @@
 import { useRef } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import { Check } from "lucide-react";
-import { experience } from "@/data/experience";
+import { useContent, useMedia } from "@/content/ContentProvider";
 import { Reveal } from "@/components/animations/Reveal";
 import { formatMonth, useI18n } from "@/i18n";
 import { cn } from "@/lib/utils";
 
-const flag: Record<string, string> = { India: "IN", USA: "US", Cameroon: "CM" };
+const flag: Record<string, string> = { India: "IN", USA: "US", Cameroon: "CM", France: "FR", "United Kingdom": "UK", Canada: "CA" };
 
 /** Experience timeline. The gold line draws as you scroll. `full` shows every role and highlight. */
 export function Timeline({ full = false }: { full?: boolean }) {
   const { t, lang } = useI18n();
+  const { experience } = useContent();
   const ref = useRef<HTMLOListElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.7", "end 0.6"] });
   const scaleY = useSpring(scrollYProgress, { stiffness: 90, damping: 24 });
@@ -19,7 +20,7 @@ export function Timeline({ full = false }: { full?: boolean }) {
     <ol ref={ref} className="relative">
       <span aria-hidden="true" className="absolute bottom-0 left-[11px] top-2 w-px bg-ink/15 md:left-1/2" />
       <motion.span aria-hidden="true" style={{ scaleY }} className="absolute bottom-0 left-[11px] top-2 w-px origin-top bg-gold md:left-1/2" />
-      {experience.map((org, i) => {
+      {experience.filter((o) => o.roles?.length).map((org, i) => {
         const roles = full ? org.roles : org.roles.slice(0, 1);
         const first = org.roles[org.roles.length - 1];
         const last = org.roles[0];
@@ -31,9 +32,12 @@ export function Timeline({ full = false }: { full?: boolean }) {
             </span>
             <Reveal className={cn("md:text-right", right && "md:col-start-2 md:text-left")}>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-dark">
-                {formatMonth(first.start, lang)} — {formatMonth(last.end, lang)} · {flag[org.country]}
+                {formatMonth(first.start, lang)} — {formatMonth(last.end, lang)} · {flag[org.country] ?? org.country}
               </p>
-              <h3 className="mt-2 font-display text-display-sm font-extrabold text-ink">{org.name}</h3>
+              <h3 className={cn("mt-2 flex items-center gap-3 font-display text-display-sm font-extrabold text-ink", !right && "md:flex-row-reverse")}>
+                <OrgLogo src={org.logo} />
+                {org.url ? <a href={org.url} target="_blank" rel="noopener noreferrer" className="hover:text-forest-600">{org.name}</a> : org.name}
+              </h3>
               <p className="mt-1 text-sm text-ink-soft">{t(org.about)}</p>
             </Reveal>
             <Reveal delay={0.1} className={cn("mt-5 md:mt-0", right && "md:col-start-1 md:row-start-1 md:text-right")}>
@@ -76,4 +80,10 @@ export function Timeline({ full = false }: { full?: boolean }) {
       })}
     </ol>
   );
+}
+
+function OrgLogo({ src }: { src?: string }) {
+  const url = useMedia(src);
+  if (!url) return null;
+  return <img src={url} alt="" className="h-10 w-10 shrink-0 rounded-full border border-ink/10 bg-white object-contain p-1" loading="lazy" />;
 }

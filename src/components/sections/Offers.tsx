@@ -1,5 +1,5 @@
 import { Check } from "lucide-react";
-import { profile } from "@/data/profile";
+import { useContent } from "@/content/ContentProvider";
 import { Reveal } from "@/components/animations/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ButtonLink } from "@/components/ui/Button";
@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 
 export function Offers() {
   const { t, lang, lp, ui } = useI18n();
+  const { profile } = useContent();
   return (
     <section aria-labelledby="offers-title" className="bg-ivory py-section">
       <div className="container-site">

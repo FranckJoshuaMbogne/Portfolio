@@ -3,19 +3,21 @@ import { prerenderToNodeStream } from "react-dom/static";
 import { StaticRouter } from "react-router-dom/server";
 import App from "./App";
 import { HeadProvider, buildHeadTags, headTagsToString, type HeadCollector } from "./lib/seo";
+import { ContentProvider, type InitialContent } from "./content/ContentProvider";
 
-export { projects } from "./data/projects";
-export { domains } from "./data/services";
 export { site } from "./config/site";
+export { defaultContent, mergeContent } from "./content/defaults";
 
-export async function render(url: string) {
+export async function render(url: string, initial: InitialContent) {
   const collector: HeadCollector = {};
   const { prelude } = await prerenderToNodeStream(
     <StrictMode>
       <HeadProvider collector={collector}>
-        <StaticRouter location={url}>
-          <App />
-        </StaticRouter>
+        <ContentProvider initial={initial} live={false}>
+          <StaticRouter location={url}>
+            <App />
+          </StaticRouter>
+        </ContentProvider>
       </HeadProvider>
     </StrictMode>
   );

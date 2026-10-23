@@ -1,4 +1,6 @@
 import type { L } from "@/i18n";
+import type { Project, ProjectKind } from "@/content/types";
+export type { Project, ProjectKind };
 
 /**
  * PROJECTS — websites, brand identities and campaigns.
@@ -8,30 +10,6 @@ import type { L } from "@/i18n";
  * illustration in the project's colours is shown.
  * Video: put an .mp4 in public/videos/ and set `video: "/videos/blutailor.mp4"`.
  */
-export type ProjectKind = "website" | "brand" | "campaign";
-
-export interface Project {
-  slug: string;
-  name: string;
-  kind: ProjectKind;
-  url?: string;
-  urlLabel?: string;
-  org?: string;
-  period: L;
-  role: L;
-  summary: L;
-  context: L;
-  did: L[];
-  outcome: L;
-  stack: string[];
-  domains: string[];
-  featured?: boolean;
-  image?: string;
-  video?: string;
-  /** Colours and words for the generated preview. */
-  look: { bg: string; fg: string; accent: string; headline: string; sub: string; font?: "serif" | "sans" };
-}
-
 export const kindLabel: Record<ProjectKind, L> = {
   website: { en: "Website", fr: "Site web" },
   brand: { en: "Brand identity", fr: "Identité de marque" },
@@ -250,6 +228,3 @@ export const projects: Project[] = [
   },
 ];
 
-export function getProject(slug: string) {
-  return projects.find((p) => p.slug === slug);
-}

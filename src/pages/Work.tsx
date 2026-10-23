@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { Seo } from "@/lib/seo";
 import { useI18n } from "@/i18n";
-import { projects, kindLabel, type ProjectKind } from "@/data/projects";
+import { kindLabel } from "@/data/projects";
+import type { ProjectKind } from "@/content/types";
+import { useContent } from "@/content/ContentProvider";
 import { PageHero } from "@/components/sections/PageHero";
 import { ProjectPreview } from "@/components/art/ProjectPreview";
 import { CtaBand } from "@/components/sections/CtaBand";
@@ -13,6 +15,7 @@ import { cn } from "@/lib/utils";
 export default function Work() {
   const { lang, t, lp, ui } = useI18n();
   const [filter, setFilter] = useState<ProjectKind | "all">("all");
+  const projects = useContent().projects.filter((p) => p.published !== false);
   const list = filter === "all" ? projects : projects.filter((p) => p.kind === filter);
   const filters: (ProjectKind | "all")[] = ["all", "website", "brand", "campaign"];
   return (

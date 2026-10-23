@@ -2,14 +2,15 @@ import { useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { MessageCircle, Phone } from "lucide-react";
 import { MaskText } from "@/components/animations/MaskText";
-import { MagneticButton } from "@/components/animations/Magnetic";
+import { PrimaryCta } from "@/components/animations/Magnetic";
 import { Portrait } from "@/components/art/Portrait";
-import { profile } from "@/data/profile";
-import { site } from "@/config/site";
+import { useContact, useContent } from "@/content/ContentProvider";
 import { useI18n } from "@/i18n";
 
 export function Hero() {
-  const { t, lang, lp, ui } = useI18n();
+  const { t, ui } = useI18n();
+  const { profile, settings } = useContent();
+  const contact = useContact();
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -22,7 +23,7 @@ export function Hero() {
   const sy = useMotionValue(30);
   const bg = useMotionTemplate`radial-gradient(600px circle at ${sx}% ${sy}%, rgba(30,82,58,0.32), transparent 60%)`;
 
-  const lines = profile.heroLines[lang];
+  const lines = [0, 1, 2].map((i) => t(profile.heroLines[i] ?? { en: "", fr: "" }));
 
   return (
     <section
@@ -50,13 +51,13 @@ export function Hero() {
       <div className="container-site grid items-center gap-16 pb-24 pt-32 lg:min-h-[100svh] lg:grid-cols-12 lg:gap-10 lg:pb-20">
         <motion.div style={reduce ? undefined : { y: yText, opacity: fade }} className="lg:col-span-7">
           <p className="anim-fade-up flex flex-wrap items-center gap-3 text-sm text-ivory/80" style={{ animationDelay: "0.05s" }}>
-            <span className="flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.04] px-3 py-1.5">
+            {settings.available && <span className="flex items-center gap-2 rounded-full border border-ivory/15 bg-ivory/[0.04] px-3 py-1.5">
               <span className="relative flex h-2 w-2">
                 <span className="anim-pulse-ring absolute inset-0 rounded-full bg-[#5fbf73]" />
                 <span className="relative h-2 w-2 rounded-full bg-[#5fbf73]" />
               </span>
               {ui.footer.available}
-            </span>
+            </span>}
             <span className="font-semibold">{t(profile.title)}</span>
           </p>
 
@@ -76,12 +77,12 @@ export function Hero() {
           </p>
 
           <div className="anim-fade-up mt-10 flex flex-col gap-3 xs:flex-row xs:flex-wrap xs:items-center" style={{ animationDelay: "0.65s" }}>
-            <MagneticButton to={lp("/book")}>{ui.cta.book}</MagneticButton>
-            <a href={site.contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[56px] items-center justify-center gap-3 rounded-full border border-ivory/25 px-7 font-semibold transition-colors hover:border-ivory hover:bg-ivory/[0.06]">
+            <PrimaryCta />
+            <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[56px] items-center justify-center gap-3 rounded-full border border-ivory/25 px-7 font-semibold transition-colors hover:border-ivory hover:bg-ivory/[0.06]">
               <MessageCircle size={19} aria-hidden="true" className="text-gold-light" /> WhatsApp
             </a>
-            <a href={site.contact.phoneHref} className="inline-flex min-h-[56px] items-center justify-center gap-3 rounded-full px-4 font-semibold text-ivory/85 hover:text-ivory">
-              <Phone size={18} aria-hidden="true" className="text-gold-light" /> {site.contact.phoneDisplay}
+            <a href={contact.phoneHref} className="inline-flex min-h-[56px] items-center justify-center gap-3 rounded-full px-4 font-semibold text-ivory/85 hover:text-ivory">
+              <Phone size={18} aria-hidden="true" className="text-gold-light" /> {contact.phoneDisplay}
             </a>
           </div>
         </motion.div>

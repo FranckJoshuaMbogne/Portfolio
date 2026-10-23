@@ -2,7 +2,9 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion, type MotionValue } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
-import { projects, kindLabel, type Project } from "@/data/projects";
+import { kindLabel } from "@/data/projects";
+import type { Project } from "@/content/types";
+import { useContent } from "@/content/ContentProvider";
 import { ProjectPreview } from "@/components/art/ProjectPreview";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ButtonLink } from "@/components/ui/Button";
@@ -57,7 +59,8 @@ export function FeaturedWork() {
   const { lang, lp, ui } = useI18n();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const featured = projects.filter((p) => p.featured);
+  const { projects } = useContent();
+  const featured = projects.filter((p) => p.featured && p.published !== false);
   return (
     <section aria-labelledby="work-title" className="bg-ivory py-section">
       <div className="container-site">

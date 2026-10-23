@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, type ReactNode } from "react";
 import { absoluteUrl, site } from "@/config/site";
 import { localePath, useI18n, type Lang } from "@/i18n";
+import type { Settings } from "@/content/types";
 
 export interface SeoProps {
   title: string;
@@ -122,7 +123,7 @@ export function Seo(props: SeoProps & { status?: number }) {
 }
 
 /* Structured data */
-export const personLd = (description: string) => ({
+export const personLd = (description: string, s: Settings, portraitSrc?: string) => ({
   "@context": "https://schema.org",
   "@type": "Person",
   "@id": `${site.url}/#person`,
@@ -130,10 +131,10 @@ export const personLd = (description: string) => ({
   url: site.url,
   jobTitle: "Revenue Systems Engineer — Performance Marketing, Data & AI",
   description,
-  email: `mailto:${site.contact.email}`,
-  telephone: site.contact.phoneHref.replace("tel:", ""),
-  ...(site.media.portrait ? { image: absoluteUrl(site.media.portrait) } : {}),
-  sameAs: site.social.map((s) => s.href),
+  email: `mailto:${s.email}`,
+  telephone: s.phone,
+  ...(portraitSrc && !portraitSrc.startsWith("data:") ? { image: absoluteUrl(portraitSrc) } : {}),
+  sameAs: [s.linkedin, ...s.social.map((x) => x.href)].filter(Boolean),
   alumniOf: [
     { "@type": "CollegeOrUniversity", name: "ESSEC Business School" },
     { "@type": "CollegeOrUniversity", name: "University of Douala" },

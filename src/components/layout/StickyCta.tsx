@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
 import { MessageCircle, Phone } from "lucide-react";
-import { site } from "@/config/site";
+import { useContact } from "@/content/ContentProvider";
 import { stripLang, useI18n } from "@/i18n";
 
 export function StickyCta() {
   const { ui, lp } = useI18n();
+  const contact = useContact();
   const { pathname } = useLocation();
   const base = stripLang(pathname);
   if (base === "/book" || base === "/thank-you") return null;
@@ -15,16 +16,16 @@ export function StickyCta() {
         <Link to={lp("/book")} className="flex h-11 flex-1 items-center justify-center rounded-full bg-gold px-4 text-sm font-semibold text-deep">
           {ui.cta.bookShort}
         </Link>
-        <a href={site.contact.whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 text-ivory">
+        <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 text-ivory">
           <MessageCircle size={20} aria-hidden="true" />
         </a>
-        <a href={site.contact.phoneHref} aria-label={ui.cta.call} className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 text-ivory">
+        <a href={contact.phoneHref} aria-label={ui.cta.call} className="flex h-11 w-11 items-center justify-center rounded-full bg-ivory/10 text-ivory">
           <Phone size={19} aria-hidden="true" />
         </a>
       </div>
       {/* Desktop floating WhatsApp */}
       <a
-        href={site.contact.whatsappHref}
+        href={contact.whatsappHref}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={ui.cta.whatsapp}

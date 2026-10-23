@@ -1,24 +1,19 @@
-import { site } from "@/config/site";
 import { Reveal } from "@/components/animations/Reveal";
+import { VideoEmbed } from "@/components/ui/VideoEmbed";
+import { useContent, useMedia } from "@/content/ContentProvider";
 import { useI18n } from "@/i18n";
 
-/** Shown only when site.media.showreel is set (src/config/site.ts). */
+/** Shown only when a showreel link is set in /admin → Settings. */
 export function Showreel() {
   const { lang } = useI18n();
-  if (!site.media.showreel) return null;
+  const { settings } = useContent();
+  const poster = useMedia(settings.showreelPoster);
+  if (!settings.showreel) return null;
   return (
     <section aria-label="Showreel" className="bg-deep py-section-sm">
       <div className="container-site">
         <Reveal className="overflow-hidden rounded-[2rem] border border-ivory/10">
-          <video
-            src={site.media.showreel}
-            poster={site.media.showreelPoster ?? undefined}
-            controls
-            playsInline
-            preload="metadata"
-            className="aspect-video w-full bg-black object-cover"
-            aria-label={lang === "fr" ? "Vidéo de présentation" : "Showreel video"}
-          />
+          <VideoEmbed src={settings.showreel} poster={poster} title={lang === "fr" ? "Vidéo de présentation" : "Showreel video"} />
         </Reveal>
       </div>
     </section>

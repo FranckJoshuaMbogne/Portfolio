@@ -6,8 +6,7 @@ import { z } from "zod";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { useI18n } from "@/i18n";
-import { domains } from "@/data/services";
-import { profile } from "@/data/profile";
+import { useContact, useContent } from "@/content/ContentProvider";
 import { submitConsultation, whatsappSummary } from "@/lib/leads";
 import { Honeypot, SelectField, TextAreaField, TextField, FieldShell, inputBase } from "./Field";
 import { Button } from "@/components/ui/Button";
@@ -53,6 +52,8 @@ export function ConsultationForm() {
   const { ui, t, lang, lp } = useI18n();
   const f = ui.form;
   const navigate = useNavigate();
+  const { services: domains, profile } = useContent();
+  const contact = useContact();
   const [params] = useSearchParams();
   const [step, setStep] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -98,7 +99,7 @@ export function ConsultationForm() {
     const payload = { ...rest, lang };
     try {
       const result = await submitConsultation(payload);
-      if (result === "whatsapp") window.open(whatsappSummary(payload), "_blank", "noopener");
+      if (result === "whatsapp") window.open(whatsappSummary(payload, contact.whatsappBase), "_blank", "noopener");
       navigate(lp("/thank-you"));
     } catch {
       setError(f.errorGeneric);

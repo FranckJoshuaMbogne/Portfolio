@@ -1,22 +1,25 @@
 import { Link, useParams } from "react-router-dom";
 import { Seo, breadcrumbLd, serviceLd } from "@/lib/seo";
 import { useI18n } from "@/i18n";
-import { domains, getDomain } from "@/data/services";
-import { experience } from "@/data/experience";
-import { getProject } from "@/data/projects";
+import { useContact, useContent, useContentState } from "@/content/ContentProvider";
+import { PageLoading } from "@/components/ui/PageLoading";
+import { MediaImage } from "@/components/ui/MediaImage";
 import { PageHero } from "@/components/sections/PageHero";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Reveal } from "@/components/animations/Reveal";
 import { ProjectPreview } from "@/components/art/ProjectPreview";
 import { ButtonLink, Arrow } from "@/components/ui/Button";
-import { site } from "@/config/site";
 import NotFound from "./NotFound";
 
 export default function ServiceDetail() {
   const { slug = "" } = useParams();
   const { t, lp, ui, lang } = useI18n();
-  const d = getDomain(slug);
-  if (!d) return <NotFound />;
+  const { services: domains, experience, projects } = useContent();
+  const { ready } = useContentState();
+  const contact = useContact();
+  const getProject = (s: string) => projects.find((p) => p.slug === s && p.published !== false);
+  const d = domains.find((x) => x.slug === slug);
+  if (!d) return ready ? <NotFound /> : <PageLoading />;
   const orgs = experience.filter((o) => d.orgs.includes(o.id));
   const work = d.projects.map(getProject).filter((p): p is NonNullable<typeof p> => Boolean(p));
   const others = domains.filter((x) => x.slug !== d.slug);
@@ -43,13 +46,14 @@ export default function ServiceDetail() {
       >
         <div className="flex flex-col gap-3 xs:flex-row xs:flex-wrap">
           <ButtonLink to={lp("/book")} variant="light" size="lg">{ui.cta.book}</ButtonLink>
-          <a href={site.contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-ivory/30 px-7 font-semibold hover:border-ivory">WhatsApp</a>
+          <a href={contact.whatsappHref} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-[52px] items-center justify-center rounded-full border border-ivory/30 px-7 font-semibold hover:border-ivory">WhatsApp</a>
         </div>
       </PageHero>
 
       <section className="bg-ivory py-section-sm">
         <div className="container-site">
           <p className="font-accent text-[clamp(1.5rem,3vw,2.4rem)] italic text-forest">{t(d.tagline)}</p>
+          {d.image && <MediaImage src={d.image} className="mt-8 aspect-[21/9] w-full rounded-[1.5rem] object-cover" />}
           <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {d.services.map((s, j) => (
               <Reveal as="li" key={j} delay={(j % 3) * 0.06} className="rounded-2xl border border-ink/10 bg-ivory-50 p-6">

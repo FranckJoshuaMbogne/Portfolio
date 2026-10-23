@@ -1,18 +1,20 @@
 import type { L } from "@/i18n";
+import type { Profile, Faq } from "@/content/types";
 
 /**
  * PROFILE — the words about you. Adapted from your LinkedIn "About".
  */
-export const profile = {
+export const profile: Profile = {
   title: { en: "Eng. Franck Joshua Mbogne", fr: "Ing. Franck Joshua Mbogne" } as L,
   role: {
     en: "Revenue systems engineer · Performance marketing · Data & AI",
     fr: "Ingénieur en systèmes de revenus · Marketing de performance · Data & IA",
   } as L,
-  heroLines: {
-    en: ["I engineer", "the systems behind", "your revenue."],
-    fr: ["Je construis", "les systèmes derrière", "votre croissance."],
-  },
+  heroLines: [
+    { en: "I engineer", fr: "Je construis" },
+    { en: "the systems behind", fr: "les systèmes derrière" },
+    { en: "your revenue.", fr: "votre croissance." },
+  ],
   heroAccent: {
     en: "Engineering × Data × Performance marketing.",
     fr: "Ingénierie × Data × Marketing de performance.",
@@ -22,8 +24,8 @@ export const profile = {
     fr: "J'aide les marques qui investissent en acquisition payante à croître de façon rentable — en réparant ce qui se trouve entre la pub et la vente : site, tracking, tunnel et relance.",
   } as L,
   statement: {
-    en: "You don't scale revenue by increasing ad spend alone. You scale it by fixing the system behind it.",
-    fr: "On ne fait pas croître le chiffre d'affaires en augmentant seulement le budget pub. On le fait en réparant le système qui est derrière.",
+    en: "You don't scale revenue by increasing ad spend alone. You scale it by *fixing* the *system* behind it.",
+    fr: "On ne fait pas croître le chiffre d'affaires en augmentant seulement le budget pub. On le fait en *réparant* le *système* qui est derrière.",
   } as L,
   stats: [
     { value: 6, suffix: "", label: { en: "organisations served", fr: "organisations accompagnées" } },
@@ -116,13 +118,14 @@ export const profile = {
       fr: "Aujourd'hui, je dirige aussi Springs 360, une agence de marketing digital 360°, et j'accompagne les marques qui veulent que leur marketing fonctionne comme un système — pas comme des canaux déconnectés.",
     },
   ] as L[],
+  languages: { en: "Languages: English, French.", fr: "Langues : français, anglais." },
   principle: {
-    en: "Digital performance is not driven by tools alone, but by the systems connecting data, decisions and execution.",
-    fr: "La performance digitale ne vient pas des outils seuls, mais des systèmes qui relient données, décisions et exécution.",
+    en: "Digital performance is not driven by tools alone, but by the *systems* connecting data, decisions and execution.",
+    fr: "La performance digitale ne vient pas des outils seuls, mais des *systèmes* qui relient données, décisions et exécution.",
   } as L,
 };
 
-export const faqs: { q: L; a: L }[] = [
+export const faqs: Faq[] = [
   {
     q: { en: "What happens in the free consultation?", fr: "Que se passe-t-il pendant la consultation gratuite ?" },
     a: {

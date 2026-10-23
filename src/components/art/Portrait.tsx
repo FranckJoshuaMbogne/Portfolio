@@ -1,16 +1,19 @@
 import { motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "framer-motion";
 import { site } from "@/config/site";
+import { useContent, useMedia } from "@/content/ContentProvider";
 import { useI18n } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 const chips = ["Google Ads", "Meta Ads", "Shopify", "SEO", "Power BI", "Python", "CRM", "AI"];
 
 /**
- * Hero portrait. Uses your photo when site.media.portrait is set;
+ * Hero portrait. Uses your photo when one is set in /admin → Settings;
  * otherwise shows an animated monogram composition.
  */
 export function Portrait({ className }: { className?: string }) {
   const { lang } = useI18n();
+  const { settings } = useContent();
+  const portrait = useMedia(settings.portrait);
   const reduce = useReducedMotion();
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -37,8 +40,8 @@ export function Portrait({ className }: { className?: string }) {
 
       <motion.div style={reduce ? undefined : { rotateX: rx, rotateY: ry }} className="anim-fade-in relative h-full w-full [transform-style:preserve-3d]">
         <div className="absolute inset-0 overflow-hidden rounded-t-full rounded-b-[2.5rem] border border-gold/40 bg-gradient-to-b from-[#123826] via-[#09160f] to-[#040605] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.6)]">
-          {site.media.portrait ? (
-            <img src={site.media.portrait} alt={site.name} className="h-full w-full object-cover" fetchPriority="high" />
+          {portrait ? (
+            <img src={portrait} alt={site.name} className="h-full w-full object-cover" fetchPriority="high" />
           ) : (
             <div className="relative flex h-full w-full items-end justify-center">
               <div aria-hidden="true" className="grain absolute inset-0 opacity-[0.08] mix-blend-overlay" />

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Seo, breadcrumbLd } from "@/lib/seo";
 import { useI18n } from "@/i18n";
-import { domains } from "@/data/services";
-import { experience } from "@/data/experience";
-import { getProject } from "@/data/projects";
+import { useContent } from "@/content/ContentProvider";
+import { Industries } from "@/components/sections/Industries";
+import { MediaImage } from "@/components/ui/MediaImage";
 import { PageHero } from "@/components/sections/PageHero";
 import { Offers } from "@/components/sections/Offers";
 import { CtaBand } from "@/components/sections/CtaBand";
@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
 
 export default function Services() {
   const { lang, t, lp, ui } = useI18n();
+  const { services: domains, experience, projects } = useContent();
+  const getProject = (slug: string) => projects.find((p) => p.slug === slug && p.published !== false);
   return (
     <>
       <Seo
@@ -47,6 +49,7 @@ export default function Services() {
                 <h2 id={`h-${d.slug}`} className="-mt-6 font-display text-display-md font-extrabold text-ink">{t(d.name)}</h2>
                 <p className="mt-3 font-accent text-xl italic text-forest">{t(d.tagline)}</p>
                 <p className="mt-4 text-ink-muted">{t(d.description)}</p>
+                {d.image && <MediaImage src={d.image} className="mt-6 aspect-[16/10] w-full rounded-2xl object-cover" />}
                 <div className="mt-6">
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-soft">{ui.whereIDidIt}</p>
                   <ul className="mt-3 flex flex-wrap gap-2">
@@ -80,6 +83,7 @@ export default function Services() {
           </section>
         ))}
       </div>
+      <Industries light={false} />
       <Offers />
       <CtaBand />
     </>

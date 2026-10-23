@@ -1,11 +1,12 @@
 import { Award, GraduationCap } from "lucide-react";
-import { certifications, education } from "@/data/experience";
+import { useContent } from "@/content/ContentProvider";
 import { Reveal } from "@/components/animations/Reveal";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatMonth, useI18n } from "@/i18n";
 
 export function Credentials() {
   const { t, lang } = useI18n();
+  const { certifications, education } = useContent();
   return (
     <section aria-labelledby="cred-title" className="bg-ivory-200/60 py-section">
       <div className="container-site">
@@ -32,7 +33,7 @@ export function Credentials() {
               <Reveal as="li" key={c.name} delay={(i % 4) * 0.05} className="flex gap-4 rounded-2xl border border-ink/10 bg-ivory-50 p-5 transition-colors hover:border-gold/60">
                 <Award size={20} aria-hidden="true" className="mt-0.5 shrink-0 text-gold-dark" />
                 <div>
-                  <p className="font-semibold leading-snug text-ink">{c.name}</p>
+                  {c.url ? <a href={c.url} target="_blank" rel="noopener noreferrer" className="font-semibold leading-snug text-ink underline decoration-gold/50 underline-offset-4 hover:decoration-gold">{c.name}</a> : <p className="font-semibold leading-snug text-ink">{c.name}</p>}
                   <p className="mt-1 text-sm text-ink-soft">
                     {c.issuer} · {formatMonth(c.date, lang)}
                   </p>

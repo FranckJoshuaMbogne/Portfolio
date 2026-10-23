@@ -1,11 +1,12 @@
 import { X, Check } from "lucide-react";
-import { profile } from "@/data/profile";
+import { useContent } from "@/content/ContentProvider";
 import { Reveal } from "@/components/animations/Reveal";
 import { Eyebrow } from "@/components/ui/SectionHeader";
 import { useI18n } from "@/i18n";
 
 export function ProblemFix() {
   const { t, lang } = useI18n();
+  const { profile } = useContent();
   return (
     <section aria-labelledby="problem-title" className="bg-sage-100 py-section">
       <div className="container-site">

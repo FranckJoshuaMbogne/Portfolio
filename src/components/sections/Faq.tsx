@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { faqs } from "@/data/profile";
+import { useContent } from "@/content/ContentProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { useI18n } from "@/i18n";
 import { cn } from "@/lib/utils";
 
 export function Faq() {
   const { t, lang } = useI18n();
+  const { faqs } = useContent();
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section aria-labelledby="faq-title" className="bg-ivory py-section">

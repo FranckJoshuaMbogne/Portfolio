@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
-import type { Project } from "@/data/projects";
+import type { Project } from "@/content/types";
+import { useMedia } from "@/content/ContentProvider";
 import { cn } from "@/lib/utils";
 
 /**
@@ -15,6 +16,8 @@ export function ProjectPreview({ project, className, parallax = true, priority =
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const L = project.look;
   const isBrand = project.kind !== "website";
+  const image = useMedia(project.image);
+  const isFile = !!project.video && /\.(mp4|webm|mov)(\?|$)/i.test(project.video);
 
   return (
     <div ref={ref} className={cn("overflow-hidden rounded-2xl border border-ink/10 bg-white shadow-soft", className)}>
@@ -27,11 +30,11 @@ export function ProjectPreview({ project, className, parallax = true, priority =
         </div>
       )}
       <div className="relative aspect-[16/10] overflow-hidden" style={{ background: L.bg }}>
-        <motion.div style={parallax && !reduce && (project.image || project.video) ? { y, scale: 1.12 } : undefined} className="absolute inset-0">
-          {project.video ? (
-            <video src={project.video} poster={project.image} autoPlay muted loop playsInline className="h-full w-full object-cover" />
-          ) : project.image ? (
-            <img src={project.image} alt="" loading={priority ? "eager" : "lazy"} className="h-full w-full object-cover" />
+        <motion.div style={parallax && !reduce && (image || isFile) ? { y, scale: 1.12 } : undefined} className="absolute inset-0">
+          {isFile ? (
+            <video src={project.video} poster={image || undefined} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+          ) : image ? (
+            <img src={image} alt="" loading={priority ? "eager" : "lazy"} className="h-full w-full object-cover" />
           ) : (
             <GeneratedLook project={project} />
           )}

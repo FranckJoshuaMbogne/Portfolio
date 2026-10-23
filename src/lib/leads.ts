@@ -1,4 +1,4 @@
-import { site, whatsappLink } from "@/config/site";
+import { site } from "@/config/site";
 import { track } from "./analytics";
 import { firebaseReady, getDb } from "./firebase";
 
@@ -25,7 +25,7 @@ function clean<T extends Record<string, unknown>>(obj: T) {
   ) as Partial<T>;
 }
 
-export function whatsappSummary(p: ConsultationPayload) {
+export function whatsappSummary(p: ConsultationPayload, whatsappBase: string) {
   const lines =
     p.lang === "fr"
       ? [
@@ -44,7 +44,7 @@ export function whatsappSummary(p: ConsultationPayload) {
           `Slot: ${p.date} — ${p.time}${p.timezone ? ` (${p.timezone})` : ""}`,
           `Message: ${p.message}`,
         ];
-  return whatsappLink(lines.filter(Boolean).join("\n"));
+  return `${whatsappBase}?text=${encodeURIComponent(lines.filter(Boolean).join("\n"))}`;
 }
 
 /**
@@ -83,7 +83,7 @@ export async function submitConsultation(payload: ConsultationPayload): Promise<
   }
 
   track("generate_lead", { form: "consultation", lang: payload.lang });
-  if (results.length === 0) return "whatsapp";
-  if (!results.some(Boolean)) throw new Error("Submission failed");
-  return "saved";
+  // Nothing configured, or every destination failed: hand the request to
+  // WhatsApp (pre-filled) so no enquiry is ever lost.
+  return results.some(Boolean) ? "saved" : "whatsapp";
 }

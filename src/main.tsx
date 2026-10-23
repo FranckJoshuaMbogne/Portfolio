@@ -3,16 +3,28 @@ import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import { HeadProvider } from "./lib/seo";
+import { ContentProvider, type InitialContent } from "./content/ContentProvider";
 import "./index.css";
 
 const container = document.getElementById("root")!;
 
+// Content embedded by the prerenderer (same data the static HTML was built with).
+let initial: InitialContent | undefined;
+try {
+  const el = document.getElementById("__CONTENT__");
+  if (el?.textContent) initial = JSON.parse(el.textContent);
+} catch {
+  /* fall back to built-in content */
+}
+
 const app = (
   <StrictMode>
     <HeadProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <ContentProvider initial={initial}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ContentProvider>
     </HeadProvider>
   </StrictMode>
 );
