@@ -16,7 +16,7 @@ export const site = {
   shortName: "Franck Joshua",
   monogram: "FJ",
   /** Production URL. Set VITE_SITE_URL in .env once your domain is connected. */
-  url: stripSlash(env.VITE_SITE_URL || "https://franckjoshua-portfolio.web.app"),
+  url: stripSlash(env.VITE_SITE_URL || "https://franckpros.web.app"),
   defaultOgImage: "/og/franck-og.png",
 
   contact: {

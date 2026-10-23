@@ -6,3 +6,7 @@ node_modules/
 *.tsbuildinfo
 dist-ssr/
 .env
+
+# Firebase CLI logs can contain secrets — never commit them
+firebase-debug.log
+*-debug.log
