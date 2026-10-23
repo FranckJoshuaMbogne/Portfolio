@@ -3,7 +3,7 @@
     "rules": "firestore.rules"
   },
   "hosting": {
-    "site": "portfolio-8e06d",
+    "site": "franckpros",
     "public": "dist",
     "cleanUrls": true,
     "trailingSlash": false,
