@@ -80,6 +80,8 @@ export interface Project {
   kind: ProjectKind;
   published?: boolean;
   featured?: boolean;
+  /** Shown in the "Ongoing projects" section of the Work page. */
+  ongoing?: boolean;
   url?: string;
   urlLabel?: string;
   org?: string;

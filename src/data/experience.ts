@@ -7,16 +7,66 @@ export type { Organisation };
  */
 export const experience: Organisation[] = [
   {
+    id: "springs-360",
+    name: "Springs 360",
+    about: {
+      en: "My 360° growth agency: strategy, content, performance marketing, websites, AI & automation and data — under one team.",
+      fr: "Mon agence de croissance 360° : stratégie, contenu, performance marketing, sites web, IA et automatisation, et data — dans une seule équipe.",
+    },
+    country: "India",
+    url: "https://leadzindb.web.app",
+    domains: ["consulting", "performance", "web", "data", "brand"],
+    roles: [
+      {
+        title: { en: "Business Owner", fr: "Fondateur et dirigeant" },
+        start: "2026-10",
+        end: null,
+        type: { en: "Self-employed", fr: "Indépendant" },
+        location: { en: "Hyderabad, India", fr: "Hyderabad, Inde" },
+        summary: {
+          en: "Founded and run Springs 360, an all-in-one growth agency that connects strategy, content, ads, websites, automation and data so businesses turn attention into qualified leads and sales.",
+          fr: "Création et direction de Springs 360, une agence de croissance tout-en-un qui relie stratégie, contenu, publicité, sites web, automatisation et data pour transformer l'attention en leads qualifiés et en ventes.",
+        },
+        highlights: [
+          { en: "Strategy — growth strategy, market research, customer journey mapping, offer strategy and marketing planning", fr: "Stratégie — stratégie de croissance, études de marché, parcours client, stratégie d'offre et planification marketing" },
+          { en: "Content & Brand — social media management & automation, content marketing, branding, graphic design & video editing", fr: "Contenu et marque — gestion et automatisation des réseaux sociaux, content marketing, branding, design graphique et montage vidéo" },
+          { en: "Performance — Google Ads, Meta Ads, client acquisition, SEO & local SEO, Google Business Profile, promotions and retargeting", fr: "Performance — Google Ads, Meta Ads, acquisition clients, SEO et SEO local, Google Business Profile, promotions et retargeting" },
+          { en: "Digital Experience — website design & development, landing pages, ecommerce, CRO and UX design", fr: "Expérience digitale — design et développement de sites, landing pages, e-commerce, CRO et UX design" },
+          { en: "AI & Automation — leads management & CRM, WhatsApp automation, AI chatbots, lead nurturing & email, marketing automation and sales closing systems", fr: "IA et automatisation — gestion des leads et CRM, automatisation WhatsApp, chatbots IA, nurturing et e-mail, marketing automation et systèmes de closing" },
+          { en: "Data & Intelligence — analysis & reporting, attribution, BI dashboards and performance management", fr: "Data et intelligence — analyse et reporting, attribution, tableaux de bord BI et pilotage de la performance" },
+        ],
+        skills: ["Growth strategy", "Performance marketing", "Web development", "CRM & automation", "AI", "BI dashboards"],
+      },
+    ],
+  },
+  {
     id: "my-perfect-fit",
     name: "My Perfect Fit · BluTailor",
     about: {
-      en: "Parent company of BluTailor, a premium bespoke tailoring brand (India), and Mudraa Design, its U.S. branch.",
-      fr: "Maison mère de BluTailor, marque premium de tailleur sur mesure (Inde), et de Mudraa Design, sa branche américaine.",
+      en: "Parent company of BluTailor, a premium bespoke tailoring brand (India), and Mudraa Design, its U.S. branch — I develop and run both websites.",
+      fr: "Maison mère de BluTailor, marque premium de tailleur sur mesure (Inde), et de Mudraa Design, sa branche américaine — je développe et gère les deux sites web.",
     },
     country: "India",
     url: "https://www.blutailor.com",
     domains: ["performance", "web", "data", "brand"],
     roles: [
+      {
+        title: { en: "Digital Business Consultant", fr: "Consultant en business digital" },
+        start: "2026-10",
+        end: null,
+        type: { en: "Full-time · On-site", fr: "Temps plein · Sur site" },
+        location: { en: "Hyderabad, India", fr: "Hyderabad, Inde" },
+        summary: {
+          en: "Since 15 October 2026, advising BluTailor and Mudraa Design on their digital business: websites, acquisition, data and growth strategy across India and the U.S.",
+          fr: "Depuis le 15 octobre 2026, conseil de BluTailor et Mudraa Design sur leur business digital : sites web, acquisition, data et stratégie de croissance entre l'Inde et les États-Unis.",
+        },
+        highlights: [
+          { en: "Website development and evolution of blutailor.com and mudraadesign.com", fr: "Développement et évolution de blutailor.com et mudraadesign.com" },
+          { en: "Digital growth strategy for the India and U.S. markets", fr: "Stratégie de croissance digitale pour les marchés indien et américain" },
+          { en: "Acquisition, tracking and data connecting ads, websites and CRM", fr: "Acquisition, tracking et données reliant publicité, sites web et CRM" },
+        ],
+        skills: ["Digital strategy", "Website development", "Shopify", "SEO", "Growth"],
+      },
       {
         title: { en: "Sales and Marketing Specialist", fr: "Spécialiste ventes et marketing" },
         start: "2026-07",
@@ -31,9 +81,9 @@ export const experience: Organisation[] = [
           { en: "Built the digital marketing ecosystem and market mapping", fr: "Construction de l'écosystème marketing digital et de la cartographie du marché" },
           { en: "Managed Google Ads and Meta Ads campaigns", fr: "Gestion des campagnes Google Ads et Meta Ads" },
           { en: "Developed sales-growth strategies based on campaign performance", fr: "Stratégies de croissance des ventes basées sur la performance des campagnes" },
-          { en: "Worked with the development team on website and SEO improvements", fr: "Collaboration avec l'équipe de développement sur le site et le SEO" },
+          { en: "Website development for BluTailor (blutailor.com) and Mudraa Design (mudraadesign.com), with SEO improvements", fr: "Développement des sites web de BluTailor (blutailor.com) et Mudraa Design (mudraadesign.com), avec améliorations SEO" },
         ],
-        skills: ["Google Ads", "Meta Ads", "SEO", "Market mapping"],
+        skills: ["Google Ads", "Meta Ads", "SEO", "Website development", "Market mapping"],
       },
       {
         title: { en: "Digital Services Officer", fr: "Responsable des services digitaux" },
@@ -50,9 +100,9 @@ export const experience: Organisation[] = [
           { en: "Found the funnel bottlenecks hurting conversion and lead quality", fr: "Identification des goulots du tunnel qui freinaient la conversion et la qualité des leads" },
           { en: "Rebuilt tracking and processes to improve signal quality and performance visibility", fr: "Refonte du tracking et des process pour améliorer la qualité du signal et la visibilité des performances" },
           { en: "Adapted acquisition and messaging for the U.S. market (Mudraa Design)", fr: "Adaptation de l'acquisition et des messages au marché américain (Mudraa Design)" },
-          { en: "Shopify development, technical SEO and page-speed work on blutailor.com", fr: "Développement Shopify, SEO technique et performance sur blutailor.com" },
+          { en: "Website development: built and maintained the BluTailor (blutailor.com) and Mudraa Design (mudraadesign.com) Shopify stores — custom sections, technical SEO and page speed", fr: "Développement web : création et maintenance des boutiques Shopify de BluTailor (blutailor.com) et Mudraa Design (mudraadesign.com) — sections sur mesure, SEO technique et performance" },
         ],
-        skills: ["Data analysis", "Campaigns", "Shopify", "Tracking", "CRM", "CAC / LTV"],
+        skills: ["Website development", "Shopify", "Liquid", "Data analysis", "Campaigns", "Tracking", "CRM", "CAC / LTV"],
       },
     ],
   },

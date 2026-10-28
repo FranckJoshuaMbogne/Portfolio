@@ -15,7 +15,9 @@ import { cn } from "@/lib/utils";
 export default function Work() {
   const { lang, t, lp, ui } = useI18n();
   const [filter, setFilter] = useState<ProjectKind | "all">("all");
-  const projects = useContent().projects.filter((p) => p.published !== false);
+  const all = useContent().projects.filter((p) => p.published !== false);
+  const ongoing = all.filter((p) => p.ongoing);
+  const projects = all.filter((p) => !p.ongoing);
   const list = filter === "all" ? projects : projects.filter((p) => p.kind === filter);
   const filters: (ProjectKind | "all")[] = ["all", "website", "brand", "campaign"];
   return (
@@ -24,8 +26,8 @@ export default function Work() {
         title={lang === "fr" ? "Réalisations — sites web, marques et campagnes" : "Work — websites, brands and campaigns"}
         description={
           lang === "fr"
-            ? "Les sites, identités de marque et campagnes réalisés par Franck Joshua Mbogne : BluTailor, Mudraa Design, Springs 360, GIC IFTA, AFG Bank et plus."
-            : "Websites, brand identities and campaigns by Franck Joshua Mbogne: BluTailor, Mudraa Design, Springs 360, GIC IFTA, AFG Bank and more."
+            ? "Les sites, identités de marque et campagnes réalisés par Franck Joshua Mbogne : BluTailor, Mudraa Design, Springs 360, Kashmir Vale, Kaslyn Atelier, GIC IFTA, AFG Bank et plus."
+            : "Websites, brand identities and campaigns by Franck Joshua Mbogne: BluTailor, Mudraa Design, Springs 360, Kashmir Vale, Kaslyn Atelier, GIC IFTA, AFG Bank and more."
         }
         path="/work"
       />
@@ -35,6 +37,42 @@ export default function Work() {
         intro={lang === "fr" ? "Sites web, identités de marque et campagnes — avec, pour chacun, ce que j'ai fait concrètement." : "Websites, brand identities and campaigns — each with exactly what I did."}
         crumbs={[{ label: ui.nav.work, to: lp("/work") }]}
       />
+      {ongoing.length > 0 && (
+        <section className="bg-ivory pt-16 md:pt-24" aria-labelledby="ongoing-projects">
+          <div className="container-site">
+            <div className="flex items-center gap-3">
+              <span aria-hidden="true" className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-gold" />
+              </span>
+              <h2 id="ongoing-projects" className="font-display text-display-sm font-extrabold text-ink">
+                {lang === "fr" ? "Projets en cours" : "Ongoing projects"}
+              </h2>
+            </div>
+            <ul className="mt-10 grid gap-x-8 gap-y-14 md:grid-cols-2">
+              {ongoing.map((p) => (
+                <li key={p.slug}>
+                  <Link to={lp(`/work/${p.slug}`)} className="group block">
+                    <div className="transition-transform duration-700 ease-editorial group-hover:-translate-y-2">
+                      <ProjectPreview project={p} parallax={false} />
+                    </div>
+                    <div className="mt-5 flex items-start justify-between gap-6">
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold-dark">{t(kindLabel[p.kind])} · {t(p.period)}</p>
+                        <h3 className="mt-2 font-display text-display-sm font-extrabold text-ink">{p.name}</h3>
+                        <p className="mt-2 max-w-md text-ink-muted">{t(p.summary)}</p>
+                      </div>
+                      <span className="mt-8 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-ink/20 transition-colors group-hover:border-forest group-hover:bg-forest group-hover:text-ivory">
+                        <Arrow />
+                      </span>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
       <section className="bg-ivory py-section-sm">
         <div className="container-site">
           <LayoutGroup>

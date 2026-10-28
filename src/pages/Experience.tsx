@@ -15,8 +15,8 @@ export default function Experience() {
         title={lang === "fr" ? "Parcours — expériences, formation et certifications" : "Experience — roles, education and certifications"}
         description={
           lang === "fr"
-            ? "Le parcours de Franck Joshua Mbogne : BluTailor / My Perfect Fit, RP 237, AFG Bank Cameroun, King Arthur, AIESEC — plus ESSEC, Université de Douala et 10 certifications."
-            : "Franck Joshua Mbogne's experience: BluTailor / My Perfect Fit, RP 237, AFG Bank Cameroun, King Arthur, AIESEC — plus ESSEC, University of Douala and 10 certifications."
+            ? "Le parcours de Franck Joshua Mbogne : Springs 360, BluTailor / My Perfect Fit, RP 237, AFG Bank Cameroun, King Arthur, AIESEC — plus ESSEC, Université de Douala et 10 certifications."
+            : "Franck Joshua Mbogne's experience: Springs 360, BluTailor / My Perfect Fit, RP 237, AFG Bank Cameroun, King Arthur, AIESEC — plus ESSEC, University of Douala and 10 certifications."
         }
         path="/experience"
         jsonLd={[breadcrumbLd([{ name: ui.nav.home, path: lp("/") }, { name: ui.nav.experience, path: lp("/experience") }])]}

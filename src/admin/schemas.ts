@@ -100,6 +100,7 @@ export const projectFields: Field[] = [
   { k: "slug", label: "URL slug", type: "text", hint: "Used in the address: /work/<slug>. Lowercase letters, numbers and dashes." },
   { k: "published", label: "Published (visible on the site)", type: "bool" },
   { k: "featured", label: "Featured on the home page", type: "bool" },
+  { k: "ongoing", label: "Ongoing project (shown under “Ongoing projects”)", type: "bool" },
   {
     k: "kind",
     label: "Type",
@@ -152,6 +153,7 @@ export const newProject = (): Project => ({
   kind: "website",
   published: false,
   featured: false,
+  ongoing: false,
   period: { ...L },
   role: { ...L },
   summary: { ...L },
